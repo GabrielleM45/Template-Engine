@@ -4,8 +4,7 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const util = require('util');
-const writeFileAsync = util.promisify(fs.writeFile);
+
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
@@ -27,10 +26,6 @@ function validateId(input) {
     }
     return true;
 }
-
-
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
 
 const createManager = () => {
     return inquirer
@@ -70,7 +65,9 @@ const createManager = () => {
             console.log("Now that we have your information, let's gather the rest of your Team's info.");
 
             createEmployee();
+
         });
+
 }
 
 const createEmployee = () => {
@@ -84,8 +81,7 @@ const createEmployee = () => {
                 "Intern",
                 "I Have no other Team Members to add."
             ]
-        }])
-        .then((data) => {
+        }]).then((data) => {
             switch (data.change) {
                 case "Engineer":
                     createEngineer();
@@ -93,17 +89,14 @@ const createEmployee = () => {
                 case "Intern":
                     createIntern();
                     break;
+                case "I Have no other Team Members to add.":
+                    teamHTML();
+                    break;
                 default:
-                    fs.writeFile(outputPath, render(teamMember), function(err) {
-                        if (err) {
-                            throw err;
-                        }
-                    });
-                    console.log("Successfully added Team Members! Open your Team Page to view your Team.");
                     break;
             }
         });
-}
+};
 
 const createEngineer = () => {
     return inquirer
@@ -127,16 +120,6 @@ const createEngineer = () => {
                 message: "What is their ID number?",
                 name: "id",
                 validate: validateId
-            },
-            {
-                type: "list",
-                message: "Are there any other Team Members to add?",
-                name: "change",
-                choices: [
-                    "Intern",
-                    "Engineer",
-                    "I Have no other Team Members to add."
-                ]
             }
         ])
         .then((data) => {
@@ -150,23 +133,9 @@ const createEngineer = () => {
             teamMember.push(newEngineer);
             memberId.push(data.id);
 
+            console.log("You've successfully added your Engineer");
 
-            switch (data.change) {
-                case "Engineer":
-                    createEngineer();
-                    break;
-                case "Intern":
-                    createIntern();
-                    break;
-                default:
-                    fs.writeFile(outputPath, render(teamMember), function(err) {
-                        if (err) {
-                            throw err;
-                        }
-                    });
-                    console.log("Successfully added Team Members! Open your Team Page to view your Team.");
-                    break;
-            }
+            createEmployee();
         });
 }
 
@@ -192,17 +161,8 @@ const createIntern = () => {
                 type: "input",
                 message: "What school are they currently attending?",
                 name: "school"
-            },
-            {
-                type: "list",
-                message: "Are there any other Team Members to add?",
-                name: "change",
-                choices: [
-                    "Intern",
-                    "Engineer",
-                    "I Have no other Team Members to add."
-                ]
             }
+
         ])
         .then((data) => {
             const newIntern = new Intern(
@@ -215,65 +175,18 @@ const createIntern = () => {
             teamMember.push(newIntern);
             memberId.push(data.id);
 
-            switch (data.change) {
-                case "Engineer":
-                    createEngineer();
-                    break;
-                case "Intern":
-                    createIntern();
-                    break;
-                default:
-                    fs.writeFile(outputPath, render(teamMember), function(err) {
-                        if (err) {
-                            throw err;
-                        }
-                    });
-                    console.log("Successfully added Team Members! Open your Team Page to viewTeam.");
-                    break;
-            }
-        })
+            console.log("You've successfully added your Engineer");
+
+            createEmployee();
+
+        });
 }
 
-const init = async() => {
-
-    console.log("Hi there, as the Team's Manager, let's get started on creating your Team...");
-    try {
-
-        const data = await createManager();
-        await writeFileAsync(outputPath, render(teamMember));
-
-        console.log("Successfully added Team Members! Open your Main Page to view Team.");
-
-    } catch (err) {
-
-        console.log(err);
-
-
+const teamHTML = () => {
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR);
     }
+    fs.writeFileSync(outputPath, render(teamMember), "utf-8");
 }
-init();
 
-
-
-
-
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ``
+createManager();
