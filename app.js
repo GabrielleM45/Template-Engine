@@ -49,7 +49,13 @@ const createManager = () => {
                 type: "input",
                 message: "What is your office number?",
                 name: "officeNumber"
-            }
+            },
+            // for future development{
+            //     type: "input",
+            //     message: "What is the name of your Team?",
+            //     name: "teamName"
+            // }
+
         ])
         .then((data) => {
             const newManager = new Manager(
