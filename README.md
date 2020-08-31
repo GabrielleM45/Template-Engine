@@ -8,13 +8,20 @@
 
 
   ## Description
- This is a CLI based application. This can be used as the Manager or a team of Engineers and Interns to create a visual display of team Members. Each card contains the team member's name, email, github (if applicable), school (if applicable), and office number (if applicable). 
+ This is a CLI based application. This can be used as the Manager or a team of Engineers and Interns to create a visual display of team Members. Each card contains the team member's name, email, github (if applicable), school (if applicable), and office number (if applicable).
 
 
 
 
 
   ![picture](assets/ScreenShot_TeamCardspng)
+
+
+
+
+
+  ![clip of CLI](assets/gifbegin.gif)
+
 
 
 
