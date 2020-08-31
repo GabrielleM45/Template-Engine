@@ -5,7 +5,8 @@
     background-color: rgba(211, 232, 252, 0.884);
 }
 
-#teamName {
+#teamName,
+#h1 {
     font-family: 'Abril Fatface, cursive';
     font-size: 75px;
 }
@@ -23,13 +24,12 @@
 .card {
     padding: 8px;
     margin: 15px;
-    width: 25%;
     box-shadow: 1px 0px 4px 2px rgba(21, 100, 74, 0.781);
 }
 
 .card-body {
     background-color: rgba(211, 232, 252, 0.884);
-    text-align: center;
+    text-align: justify;
     font-size: 16px;
     font-family: 'raleway', 'san-serif';
     border: grey line,
