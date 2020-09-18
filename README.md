@@ -70,10 +70,10 @@
   ## Author:
   Gabrielle Maxey
 
-  ![](http://i.imgur.com/VlgBKQ9.png)Email: gmaxeyg@gmail.com
+  ![](http://i.imgur.com/VlgBKQ9.png) Email: gmaxeyg@gmail.com
 
 
-  ![](http://i.imgur.com/9I6NRUm.png)Github: <https://github.com/GabrielleM45>
+  ![](http://i.imgur.com/9I6NRUm.png) Github: <https://github.com/GabrielleM45>
 
 
 
